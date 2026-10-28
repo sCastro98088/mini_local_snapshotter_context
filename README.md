@@ -29,3 +29,10 @@ The trade-off is explicit and one-sided: we only accept JSON scalar types (`str`
 `restore` silently accepts unknown keys from a token produced by a newer producer. Strictly checking keys would break every rolling deploy, so we chose forward-compatibility over safety. A typo in a key name will therefore pass through quietly — rely on the consumers of each key to validate their own input, and do not use snapshot keys as a control-flow mechanism.
 
 A second edge: `restore` replaces the current context's snapshot entirely. If you have local values you need to keep, merge them into the token or capture your own token first and restore it afterwards. There is no per-key merge, by design — merging across versions has too many sensible semantics to pick one.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
