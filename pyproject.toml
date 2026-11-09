@@ -1,6 +1,6 @@
 [project]
 name = "mini-local-snapshotter-context"
-version = "0.1.0"
+version = "0.1.1"
 description = "Serializes context-local key-value pairs into a token for cross-process propagation."
 requires-python = ">=3.10"
 dependencies = []
